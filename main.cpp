@@ -6,7 +6,7 @@
 /*   By: tnaton <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 19:09:37 by tnaton            #+#    #+#             */
-/*   Updated: 2022/11/30 12:04:10 by tnaton           ###   ########.fr       */
+/*   Updated: 2022/11/30 19:52:06 by tnaton           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main () {
 			{
 				std::cerr << "### TEST CONSTRUCTOR VECTOR ###" << std::endl;
 				std::cerr << std::endl;
-				{
+/*				{
 					Clock test;
 					for (int i = 0; i < 100000 * PREC; i++) {
 						for (int j = 0; j < 50000; j++)
@@ -68,7 +68,7 @@ int main () {
 					std::cout << "vector default constructor" << std::endl;
 				}
 				std::cerr << std::endl;
-				{
+*/				{
 					Clock test;
 					for (int i = 0; i < 1 * PREC; i++) {
 						NAMESPACE::vector<int> v1(MAXSIZE, 1);
@@ -352,7 +352,7 @@ int main () {
 			{
 				std::cerr << "### TEST CONSTRUCTOR MAP ###" << std::endl;
 				std::cerr << std::endl;
-				{
+/*				{
 					Clock test;
 					for (int i = 0; i < 100000 * PREC; i++) {
 						for (int j = 0; j < 1000; j++) {
@@ -365,7 +365,7 @@ int main () {
 					std::cout << "map default constructor" << std::endl;
 				}
 				std::cerr << std::endl;
-				{
+*/				{
 					NAMESPACE::map<int, int> m;
 					for (int i = 0; i < 10000; i++) {
 						m.insert(NAMESPACE::make_pair(i, 42));
@@ -579,7 +579,7 @@ int main () {
 			{
 				std::cerr << "### TEST CONSTRUCTOR SET ###" << std::endl;
 				std::cerr << std::endl;
-				{
+/*				{
 					Clock test;
 					for (int i = 0; i < 100000 * PREC; i++) {
 						for (int j = 0; j < 1000; j++) {
@@ -592,7 +592,7 @@ int main () {
 					std::cout << "set default constructor" << std::endl;
 				}
 				std::cerr << std::endl;
-				{
+*/				{
 					NAMESPACE::set<int> m;
 					for (int i = 0; i < 10000; i++) {
 						m.insert(i);
