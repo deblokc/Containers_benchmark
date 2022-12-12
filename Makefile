@@ -6,7 +6,7 @@
 #    By: tnaton <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/22 19:13:09 by tnaton            #+#    #+#              #
-#    Updated: 2022/11/30 12:10:12 by tnaton           ###   ########.fr        #
+#    Updated: 2022/12/12 18:13:16 by tnaton           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ FT = test_ft
 STD = test_std
 
 SRC = main.cpp
+
+INC = include.hpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -29,11 +31,15 @@ CXXFLAGS = -Wall -Wextra -Werror -Wpedantic -Wshadow -O3 -g -std=c++98
 all: $(FT) $(STD)
 .PHONY: all
 
-$(FT): $(SRC)
+$(FT): $(SRC) $(INC)
 	$(CXX) $(CXXFLAGS) -DNAMESPACE=ft -DPREC=$(PREC) -DTEST=$(TEST) $(SRC) -o $@
 	
-$(STD): $(SRC)
+$(STD): $(SRC) $(INC)
 	$(CXX) $(CXXFLAGS) -DNAMESPACE=std -DPREC=$(PREC) -DTEST=$(TEST) $(SRC) -o $@
+
+$(OBJ): $(INC)
+
+$(SRC): $(INC)
 
 clean:
 	rm -rf $(OBJ) ft.log std.log

@@ -6,7 +6,7 @@
 /*   By: tnaton <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 19:09:37 by tnaton            #+#    #+#             */
-/*   Updated: 2022/12/05 15:09:14 by tnaton           ###   ########.fr       */
+/*   Updated: 2022/12/12 18:02:15 by tnaton           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,61 @@ class	Clock {
 		struct timeval _time;
 };
 
-int main () {
+template <typename T>
+void printVector(const NAMESPACE::vector<T> & v) {
+	typedef typename NAMESPACE::vector<T>::const_iterator			citerator;
+	typedef typename NAMESPACE::vector<T>::const_reverse_iterator	criterator;
+	std::cout << "VECTOR = ";
+	for (citerator it = v.begin(); it != v.end(); it++) {
+		std::cout << *it << "|";
+	}
+	std::cout << std::endl;
+	std::cout << "REVERSE VECTOR = ";
+	for (criterator it = v.rbegin(); it != v.rend(); it++) {
+		std::cout << *it << "|";
+	}
+	std::cout << std::endl;
+	std::cout << "SIZE:" << v.size() << std::endl;
+	std::cout << "CAPACITY:" << v.capacity() << std::endl;
+	std::cout << "IS EMPTY:" << v.empty() << std::endl;
+	std::cout << "MAX SIZE:" << v.max_size() << std::endl;
+}
+
+template <typename T, typename U>
+void printMap(const NAMESPACE::map<T, U> & m) {
+	typedef typename NAMESPACE::map<T, U>::const_iterator			citerator;
+	typedef typename NAMESPACE::map<T, U>::const_reverse_iterator	criterator;
+	std::cout << "MAP = ";
+	for (citerator it = m.begin(); it != m.end(); it++) {
+		std::cout << it->first << "&" << it->second << "|";
+	}
+	std::cout << std::endl;
+	std::cout << "REVERSE MAP = ";
+	for (criterator it = m.rbegin(); it != m.rend(); it++) {
+		std::cout << it->first << "&" << it->second << "|";
+	}
+	std::cout << "SIZE:" << m.size() << std::endl;
+	std::cout << "IS EMPTY:" << m.empty() << std::endl;
+}
+
+template <typename T>
+void printSet(const NAMESPACE::set<T> & s) {
+	typedef typename NAMESPACE::set<T>::const_iterator			citerator;
+	typedef typename NAMESPACE::set<T>::const_reverse_iterator	criterator;
+	std::cout << "SET = ";
+	for (citerator it = s.begin(); it != s.end(); it++) {
+		std::cout << *it << "|";
+	}
+	std::cout << std::endl;
+	std::cout << "REVERSE SET = ";
+	for (criterator it = s.rbegin(); it != s.rend(); it++) {
+		std::cout << *it << "|";
+	}
+	std::cout << "SIZE:" << s.size() << std::endl;
+	std::cout << "IS EMPTY:" << s.empty() << std::endl;
+}
+
+int main (void) {
 	volatile int x = 0;
 	switch (TEST) {
 		case (0):{}
@@ -767,6 +821,189 @@ int main () {
 					std::cout << "set clear all" << std::endl;
 				}
 				std::cerr << std::endl;
+			}
+			if (TEST)
+				break;
+		}
+	}
+	switch (TEST) {
+		std::cout << "//////////////////////////////////////////////////////////////////////////" << std::endl;
+		std::cout << "                           TEST OF OUTPUT FOR DIFF                        " << std::endl;
+		std::cout << "//////////////////////////////////////////////////////////////////////////" << std::endl;
+		case (0):{
+			std::cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-STACK-=-=-=-=-=-=-=-=-=-=-=-=-=" << std::endl;
+			{
+				NAMESPACE::stack<int>	s;
+				
+				std::cout << "IS EMPTY:" << s.empty() << std::endl;
+				std::cout << "SIZE:" << s.size() << std::endl;
+				s.push(42);
+				s.push(42);
+				s.push(42);
+				std::cout << "IS EMPTY:" << s.empty() << std::endl;
+				std::cout << "SIZE:" << s.size() << std::endl;
+				std::cout << "TOP:" << s.top() << std::endl;
+				s.pop();
+				std::cout << "IS EMPTY:" << s.empty() << std::endl;
+				std::cout << "SIZE:" << s.size() << std::endl;
+				std::cout << "TOP:" << s.top() << std::endl;
+				s.pop();
+				s.pop();
+				std::cout << "IS EMPTY:" << s.empty() << std::endl;
+				std::cout << "SIZE:" << s.size() << std::endl;
+			}
+		}
+		case (1):{
+			std::cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-VECTOR-=-=-=-=-=-=-=-=-=-=-=-=-=" << std::endl;
+			{
+				int lst[42];
+				for (int i = 0; i < 42; i++) {
+					lst[i] = (i + 42)%5;
+				}
+				NAMESPACE::vector<int>	v(lst, lst + 12);
+				printVector(v);
+				NAMESPACE::vector<int> other;
+				printVector(other);
+				other = v;
+				printVector(other);
+				v.assign(lst + 5, lst + 7);
+				printVector(v);
+				v.assign(lst, lst + 40);
+				printVector(v);
+				std::cout << "AT POS 2" << v.at(2) << std::endl;
+				std::cout << "[] POS 10" << v[10] << std::endl;
+				std::cout << "FRONT" << v.front() << std::endl;
+				std::cout << "BACK" << v.back() << std::endl;
+				std::cout << "DATA" << *(v.data() + 5) << std::endl;
+				v.reserve(100);
+				printVector(v);
+				v.clear();
+				printVector(v);
+				v.insert(v.begin(), 42, 42);
+				printVector(v);
+				v.insert(v.begin() + 20, 9);
+				printVector(v);
+				v.erase(v.begin() + 9, v.end() - 2);
+				printVector(v);
+				v.push_back(1);
+				printVector(v);
+				v.pop_back();
+				printVector(v);
+				v.resize(30);
+				printVector(v);
+				NAMESPACE::swap(v, other);
+				printVector(v);
+				printVector(other);
+				std::cout << (v == other) << std::endl;
+				std::cout << (v != other) << std::endl;
+				std::cout << (v <= other) << std::endl;
+				std::cout << (v >= other) << std::endl;
+				std::cout << (v > other) << std::endl;
+				std::cout << (v < other) << std::endl;
+			}
+			if (TEST)
+				break;
+		}
+		case (2):{
+			std::cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-MAP-=-=-=-=-=-=-=-=-=-=-=-=-=" << std::endl;
+			{
+				NAMESPACE::pair<int, int> lst[420];
+				for (int i = 0; i < 420; i++) {
+					lst[i] = NAMESPACE::make_pair(((i + 42)%210), 0);
+				}
+				NAMESPACE::map<int, int>	m(lst, lst + 30);
+				printMap(m);
+				NAMESPACE::map<int, int>	other;
+				printMap(other);
+				other = m;
+				printMap(other);
+				std::cout << "AT POS 2" << m.at(42) << std::endl;
+				std::cout << "[] POS 10" << m[10] << std::endl;
+				printMap(m);
+				m.clear();
+				printMap(m);
+				for (NAMESPACE::map<int, int>::iterator it = other.begin(); it != other.end(); it++) {
+					NAMESPACE::pair<NAMESPACE::map<int, int>::iterator, bool> ret = m.insert(NAMESPACE::make_pair<int, int>(((it->first) + 10)%90, (it->second) + 0));
+					std::cout << ret.second;
+				}
+				std::cout << std::endl;
+				printMap(m);
+				m.insert(m.begin(), NAMESPACE::make_pair<int, int>(10, 10));
+				printMap(m);
+				m.erase(m.begin());
+				printMap(m);
+				m.erase(m.begin());
+				printMap(m);
+				printMap(other);
+				NAMESPACE::swap(m, other);
+				printMap(m);
+				printMap(other);
+				for (int i = 0; i < 500; i++) {
+					std::cout << m.count(i%250 + 1);
+					if (m.count(i)) {
+						std::cout << std::endl << m.find(i)->second << std::endl;
+					}
+				}
+				printMap(m);
+				NAMESPACE::pair<NAMESPACE::map<int, int>::iterator, NAMESPACE::map<int, int>::iterator> ret = m.equal_range(42);
+				std::cout << ret.first->first << "&" << ret.first->second << "|" << ret.second->first << "&" << ret.second->second << std::endl;
+				std::cout << (m == other) << std::endl;
+				std::cout << (m != other) << std::endl;
+				std::cout << (m <= other) << std::endl;
+				std::cout << (m >= other) << std::endl;
+				std::cout << (m > other) << std::endl;
+				std::cout << (m < other) << std::endl;
+			}
+			if (TEST)
+				break;
+		}
+		case (3):{
+			std::cout << "=-=-=-=-=-=-=-=-=-=-=-=-=-=-SET-=-=-=-=-=-=-=-=-=-=-=-=-=" << std::endl;
+			{
+				int lst[420];
+				for (int i = 0; i < 420; i++) {
+					lst[i] = (i + 42)%210;
+				}
+				NAMESPACE::set<int>	s(lst, lst + 30);
+				printSet(s);
+				NAMESPACE::set<int>	other;
+				printSet(other);
+				other = s;
+				printSet(other);
+				printSet(s);
+				s.clear();
+				printSet(s);
+				for (NAMESPACE::set<int>::iterator it = other.begin(); it != other.end(); it++) {
+					NAMESPACE::pair<NAMESPACE::set<int>::iterator, bool> ret = s.insert((*it + 10)%90);
+					std::cout << ret.second;
+				}
+				std::cout << std::endl;
+				printSet(s);
+				s.insert(s.begin(), 10);
+				printSet(s);
+				s.erase(s.begin());
+				printSet(s);
+				s.erase(s.begin());
+				printSet(s);
+				printSet(other);
+				NAMESPACE::swap(s, other);
+				printSet(s);
+				printSet(other);
+				for (int i = 0; i < 500; i++) {
+					std::cout << s.count(i%250 + 1);
+					if (s.count(i)) {
+						std::cout << std::endl << *s.find(i) << std::endl;
+					}
+				}
+				printSet(s);
+				NAMESPACE::pair<NAMESPACE::set<int>::iterator, NAMESPACE::set<int>::iterator> ret = s.equal_range(42);
+				std::cout << *ret.first << "|" << *ret.second << std::endl;
+				std::cout << (s == other) << std::endl;
+				std::cout << (s != other) << std::endl;
+				std::cout << (s <= other) << std::endl;
+				std::cout << (s >= other) << std::endl;
+				std::cout << (s > other) << std::endl;
+				std::cout << (s < other) << std::endl;
 			}
 			if (TEST)
 				break;
